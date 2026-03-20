@@ -1,21 +1,37 @@
-// --- 1. Variables & State ---
-let clickCount = 0; // State variable (Requirement: 2 variables)
-const greeting = "Hello! Portfolio script is active.";
+function getMessage() {
+  const output = document.getElementById("output");
+  output.innerHTML = "<em>Loading...</em>";
 
-console.log(greeting); // Console Message #1
-
-// --- 2. Functions ---
-
-// Feature A: Theme Toggle
-function setTheme() {
-    // Note: No dot before "dark-mode" here!
-    document.body.classList.toggle("dark-mode");
-    console.log("Theme toggled successfully!"); // Console Message #2
+  fetch("http://localhost:3000/api/message")
+    .then(response => response.json())
+    .then(data => {
+      output.innerHTML = `
+        <div style="color: green; font-weight: bold;">✅ Success!</div>
+        <p><strong>Message:</strong> ${data.message}</p>
+        <p><strong>Course:</strong> ${data.course} (${data.year})</p>
+      `;
+    })
+    .catch(error => {
+      output.innerHTML = "<p style='color:red;'>❌ Error: Backend not running!</p>";
+    });
 }
 
-// Feature B: Click Counter
-function handleCounter() {
-    clickCount++; // Update state
-    console.log("Current clicks: " + clickCount); // Console Message #3
-    alert("You have clicked the button " + clickCount + " times!");
+function getStudent() {
+  const output = document.getElementById("output");
+  output.innerHTML = "<em>Loading Student Profile...</em>";
+
+  fetch("http://localhost:3000/api/student")
+    .then(response => response.json())
+    .then(data => {
+      // FIX: These names (data.status, data.location) now match the server exactly
+      output.innerHTML = `
+        <div style="color: blue; font-weight: bold;">🎓 Student Profile:</div>
+        <p><strong>Name:</strong> ${data.name}</p>
+        <p><strong>Status:</strong> ${data.status}</p>
+        <p><strong>Location:</strong> ${data.location}, ${data.university}</p>
+      `;
+    })
+    .catch(error => {
+      output.innerHTML = "<p style='color:red;'>❌ Error: Could not reach server.</p>";
+    });
 }

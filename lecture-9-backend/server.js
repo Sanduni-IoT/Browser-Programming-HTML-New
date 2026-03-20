@@ -1,35 +1,38 @@
-/* Task 4 Answer:
-We need a backend because frontend JavaScript is visible to the user, making it 
-insecure for sensitive data like passwords. Additionally, a backend allows us to 
-connect to databases to store data permanently and perform heavy tasks that 
-would otherwise slow down the user's browser.
-*/
-
-
-const express = require("express");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
 const app = express();
-const PORT = 3000;
+const port = 3000;
 
 app.use(cors());
 
-// Task 2 Endpoint
-app.get("/api/message", (req, res) => {
+// Route for the main message
+app.get('/api/message', (req, res) => {
   res.json({
-    message: "My first API works!",
+    message: "Hello from the Node.js backend!",
     course: "Browser Programming",
-    year: 2026
+    year: 2026,
+    time: new Date()
   });
 });
 
-// Task 3 Endpoint
-app.get("/api/student", (req, res) => {
+// Route for Student Info
+// Note: We use lowercase 'status', 'university', and 'location'
+app.get('/api/student', (req, res) => {
   res.json({
     name: "Sanduni Edirisinghe",
-    role: "Student"
+    status: "Student",
+    university: "Savonia UAS",
+    location: "Kuopio"
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });
+
+/* Task 4 Answer:
+We need a backend because frontend JavaScript is visible to the user, 
+making it insecure for sensitive data like passwords. Additionally, 
+a backend allows us to connect to databases to store data permanently 
+and perform heavy tasks that would otherwise slow down the user's browser.
+*/
